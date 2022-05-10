@@ -19,7 +19,7 @@ public class TacheTicket {
     @ManyToOne
     private MembreEquipe membreEquipe;
     @ManyToOne
-    private Ticket intervention;
+    private Ticket ticket;
 
     public Long getId() {
         return id;
@@ -69,11 +69,11 @@ public class TacheTicket {
         this.membreEquipe = membreEquipe;
     }
 
-    public Ticket getIntervention() {
-        return intervention;
+    public Ticket getTicket() {
+        return ticket;
     }
 
-    public void setIntervention(Ticket intervention) {
-        this.intervention = intervention;
+    public void setTicket(Ticket ticket) {
+        this.ticket = ticket;
     }
 }

@@ -22,12 +22,12 @@ public class Ticket {
     private String libelle;
     private String code;
     //    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    private String etatIntervention;
+    private String etatTicket;
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    @OneToMany(mappedBy = "intervention")
-    private List<TicketMembreEquipe> interventionMembreEquipe;
+    @OneToMany(mappedBy = "ticket")
+    private List<TicketMembreEquipe> ticketMembreEquipe;
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    @OneToMany(mappedBy="intervention")
+    @OneToMany(mappedBy="ticket")
     private List<Conseils> conseils;
 
     public Long getId() {
@@ -86,20 +86,20 @@ public class Ticket {
         this.code = code;
     }
 
-    public String getEtatIntervention() {
-        return etatIntervention;
+    public String getEtatTicket() {
+        return etatTicket;
     }
 
-    public void setEtatIntervention(String etatIntervention) {
-        this.etatIntervention = etatIntervention;
+    public void setEtatTicket(String etatTicket) {
+        this.etatTicket = etatTicket;
     }
 
-    public List<TicketMembreEquipe> getInterventionMembreEquipe() {
-        return interventionMembreEquipe;
+    public List<TicketMembreEquipe> getTicketMembreEquipe() {
+        return ticketMembreEquipe;
     }
 
-    public void setInterventionMembreEquipe(List<TicketMembreEquipe> interventionMembreEquipe) {
-        this.interventionMembreEquipe = interventionMembreEquipe;
+    public void setTicketMembreEquipe(List<TicketMembreEquipe> ticketMembreEquipe) {
+        this.ticketMembreEquipe = ticketMembreEquipe;
     }
 
     public List<Conseils> getConseils() {
