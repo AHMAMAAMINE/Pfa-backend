@@ -1,9 +1,6 @@
 package com.supportportal.domain;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 public class Collaborateur {
@@ -11,6 +8,8 @@ public class Collaborateur {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String codeCollaborateur;
+    @OneToOne
+    private User user;
 
     public Long getId() {
         return id;
@@ -26,5 +25,13 @@ public class Collaborateur {
 
     public void setCodeCollaborateur(String codeCollaborateur) {
         this.codeCollaborateur = codeCollaborateur;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }
