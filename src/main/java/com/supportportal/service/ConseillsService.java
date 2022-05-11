@@ -18,7 +18,7 @@ public interface ConseillsService {
 
     List<Conseils> findByTicketCode(String code);
 
-    int save(Conseils conseils);
+    Conseils save(Conseils conseils);
 
     Conseils update(Conseils conseils);
 }

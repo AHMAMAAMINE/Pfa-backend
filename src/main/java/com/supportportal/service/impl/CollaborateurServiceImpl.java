@@ -1,5 +1,6 @@
 package com.supportportal.service.impl;
 
+import com.supportportal.constant.CollaborateurImplConstant;
 import com.supportportal.domain.Collaborateur;
 import com.supportportal.domain.User;
 import com.supportportal.exception.domain.EmailExistException;
@@ -13,14 +14,15 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 
+import javax.transaction.Transactional;
 import java.io.IOException;
 import java.util.List;
 
-import static com.supportportal.constant.CollaborateurImplConstant.*;
-
+@Service
 public class CollaborateurServiceImpl implements CollaborateurService {
 
     private UserService userService;
@@ -38,6 +40,11 @@ public class CollaborateurServiceImpl implements CollaborateurService {
     }
 
     @Override
+    public Collaborateur findByUserUsername(String username) {
+        return collaborateurRepository.findByUserUsername(username);
+    }
+
+    @Transactional
     public int deleteByCodeCollaborateur(String codeCollaborateur) {
         return collaborateurRepository.deleteByCodeCollaborateur(codeCollaborateur);
     }
@@ -50,8 +57,8 @@ public class CollaborateurServiceImpl implements CollaborateurService {
     @Override
     public Collaborateur save(Collaborateur collaborateur) throws UserNotFoundException, EmailExistException, IOException, UsernameExistException, NotAnImageFileException {
         if (findByCodeCollaborateur(collaborateur.getCodeCollaborateur()) != null) {
-            LOGGER.error(COLLABORATEUR_ALREADY_EXISTS + collaborateur.getUser().getUsername());
-            throw new UsernameNotFoundException(COLLABORATEUR_ALREADY_EXISTS + collaborateur.getUser().getUsername());
+            LOGGER.error(CollaborateurImplConstant.COLLABORATEUR_ALREADY_EXISTS + collaborateur.getUser().getUsername());
+            throw new UsernameNotFoundException(CollaborateurImplConstant.COLLABORATEUR_ALREADY_EXISTS + collaborateur.getUser().getUsername());
         }
         else {
             User user = userService.addNewUser(collaborateur.getUser().getFirstName()
@@ -72,8 +79,8 @@ public class CollaborateurServiceImpl implements CollaborateurService {
     public Collaborateur update(Collaborateur collaborateur, MultipartFile profileImage) throws UserNotFoundException, EmailExistException, IOException, UsernameExistException, NotAnImageFileException {
         Collaborateur collaborateurUpdate=collaborateurRepository.findByCodeCollaborateur(collaborateur.getCodeCollaborateur());
         if(collaborateurUpdate==null) {
-            LOGGER.error(NO_COLLABORATEUR_FOUND_BY_CODE + collaborateur.getUser().getUsername());
-            throw new UsernameNotFoundException( NO_COLLABORATEUR_FOUND_BY_CODE + collaborateur.getUser().getUsername());
+            LOGGER.error(CollaborateurImplConstant.NO_COLLABORATEUR_FOUND_BY_CODE + collaborateur.getUser().getUsername());
+            throw new UsernameNotFoundException( CollaborateurImplConstant.NO_COLLABORATEUR_FOUND_BY_CODE + collaborateur.getUser().getUsername());
         }
         else{
             User user=userService.updateUser(collaborateur.getUser().getUsername(),

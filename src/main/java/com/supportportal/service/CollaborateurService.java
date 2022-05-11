@@ -13,7 +13,9 @@ import java.util.List;
 public interface CollaborateurService {
      Collaborateur findByCodeCollaborateur(String codeCollaborateur);
 
-     int deleteByCodeCollaborateur(String codeCollaborateur);
+    Collaborateur findByUserUsername(String username);
+
+    int deleteByCodeCollaborateur(String codeCollaborateur);
 
     List<Collaborateur> findAll();
 

@@ -10,6 +10,8 @@ import java.util.List;
 public interface CollaborateurRepository extends JpaRepository<Collaborateur,Long> {
      Collaborateur findByCodeCollaborateur(String codeCollaborateur);
 
+     Collaborateur findByUserUsername(String username);
+
      int deleteByCodeCollaborateur(String codeCollaborateur);
 
     List<Collaborateur> findAll();
