@@ -9,9 +9,9 @@ import java.util.List;
 @Repository
 public interface TacheTicketRepository extends JpaRepository<TacheTicket,Long> {
     List<TacheTicket> findAll();
-    public int deleteByCode(String code);
-    public  TacheTicket findByCode(String code);
-    public List<TacheTicket>  findByMembreEquipeCollaborateurCodeCollaborateur(String codeCollaborateur);
-    public List<TacheTicket>  findByTicketCode(String code);
-    public List<TacheTicket>  findByMembreEquipeCollaborateurCodeCollaborateurAndTicketCode(String codeCollaborateur, String codeTicket);
+     int deleteByCode(String code);
+      TacheTicket findByCode(String code);
+     List<TacheTicket>  findByMembreEquipeCollaborateurCodeCollaborateur(String codeCollaborateur);
+     List<TacheTicket>  findByTicketCode(String code);
+     List<TacheTicket>  findByMembreEquipeCollaborateurCodeCollaborateurAndTicketCode(String codeCollaborateur, String codeTicket);
 }

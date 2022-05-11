@@ -1,14 +1,11 @@
-package com.supportportal.repository;
+package com.supportportal.service;
 
 
 import com.supportportal.domain.MembreEquipe;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-@Repository
-public interface MembreEquipeRepository extends JpaRepository<MembreEquipe,Long> {
+public interface MembreEquipeService {
 
      List<MembreEquipe> findByEquipeRef(String ref);
 
@@ -17,4 +14,9 @@ public interface MembreEquipeRepository extends JpaRepository<MembreEquipe,Long>
      int deleteByCollaborateurCodeCollaborateur(String code);
 
     List<MembreEquipe> findAll();
+
+    int save(MembreEquipe membreEquipe);
+
+    MembreEquipe update(MembreEquipe membreEquipe);
+
 }

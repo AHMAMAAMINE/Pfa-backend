@@ -8,9 +8,9 @@ import java.util.List;
 
 @Repository
 public interface CollaborateurRepository extends JpaRepository<Collaborateur,Long> {
-    public Collaborateur findByCodeCollaborateur(String codeCollaborateur);
+     Collaborateur findByCodeCollaborateur(String codeCollaborateur);
 
-    public int deleteByCodeCollaborateur(String codeCollaborateur);
+     int deleteByCodeCollaborateur(String codeCollaborateur);
 
     List<Collaborateur> findAll();
 }

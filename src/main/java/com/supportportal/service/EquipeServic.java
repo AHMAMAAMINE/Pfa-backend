@@ -1,13 +1,10 @@
-package com.supportportal.repository;
+package com.supportportal.service;
 
 import com.supportportal.domain.Equipe;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-@Repository
-public interface EquipeRepository extends JpaRepository<Equipe,Long> {
+public interface EquipeServic {
      Equipe findByLibelle(String libelle);
 
      Equipe findByChefEquipeCollaborateurCodeCollaborateur(String Code);
@@ -19,4 +16,8 @@ public interface EquipeRepository extends JpaRepository<Equipe,Long> {
      int deleteByRef(String ref);
 
      List<Equipe> findAll();
+
+     int save(Equipe equipe);
+
+     Equipe update(Equipe equipe);
 }
