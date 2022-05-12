@@ -51,12 +51,7 @@
         <li><a href="#installation">Installation</a></li>
       </ul>
     </li>
-    <li><a href="#usage">Usage</a></li>
-    <li><a href="#roadmap">Roadmap</a></li>
-    <li><a href="#contributing">Contributing</a></li>
-    <li><a href="#license">License</a></li>
-    <li><a href="#contact">Contact</a></li>
-    <li><a href="#acknowledgments">Acknowledgments</a></li>
+   
   </ol>
 </details>
 
@@ -65,7 +60,7 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-[![Product Name Screen Shot][product-screenshot]]
+![Product Name Screen Shot][product-screenshot]
 On utilisant Spring BOOT on backend et Angular dans front-end avec un equipe de 5 personne ZIAD ,AMINE,ABDERAHMAN,MAIS,ZAKARIA
 on a cree une application web pour la Gestion intégrée des Tickets Client, avec suivi des taches des équipes et des projets correspondants pour optimiser les performances de l'entreprise
 on utilisant JSON WEB TOKEN au niveau de securite pour gere les connexion
@@ -100,10 +95,12 @@ si vous lancer le porjet un probelem de sorte:
 	Could not connect to SMTP host: smtp.gmail.com, port: 465
 ```
 verifier que votre antivirus est desactiver et votre compte email a un niveau de secutier base
-Pour diminuer la securiter du compte 
+Pour diminuer la securiter du compte :
+</br>
 1-connect a ton compte gmail
-2-gestion de compte
-3- securite
+</br>
+2-gestion de compte</br>
+3- securite</br>
 4-active l'accès aux applications moins sécurisées 
 
 ### Installation
