@@ -2,7 +2,12 @@ package com.supportportal.service;
 
 
 import com.supportportal.domain.MembreEquipe;
+import com.supportportal.exception.domain.EmailExistException;
+import com.supportportal.exception.domain.NotAnImageFileException;
+import com.supportportal.exception.domain.UserNotFoundException;
+import com.supportportal.exception.domain.UsernameExistException;
 
+import java.io.IOException;
 import java.util.List;
 
 public interface MembreEquipeService {
@@ -15,7 +20,7 @@ public interface MembreEquipeService {
 
     List<MembreEquipe> findAll();
 
-    int save(MembreEquipe membreEquipe);
+    MembreEquipe save(MembreEquipe membreEquipe) throws UserNotFoundException, EmailExistException, IOException, UsernameExistException, NotAnImageFileException;
 
     MembreEquipe update(MembreEquipe membreEquipe);
 

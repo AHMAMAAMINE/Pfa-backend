@@ -23,7 +23,7 @@ public interface EquipeService {
 
      List<Equipe> findAll();
 
-     int save(Equipe equipe,MultipartFile profileImage) throws UserNotFoundException, EmailExistException, IOException, UsernameExistException, NotAnImageFileException, UserNotFoundException ;
+     Equipe save(Equipe equipe,MultipartFile profileImage) throws UserNotFoundException, EmailExistException, IOException, UsernameExistException, NotAnImageFileException, UserNotFoundException ;
 
-     Equipe update(Equipe equipe, MultipartFile profileImage);
+     Equipe update(Equipe equipe, MultipartFile profileImage) throws UserNotFoundException, EmailExistException, IOException, UsernameExistException, NotAnImageFileException;
 }

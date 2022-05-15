@@ -23,9 +23,11 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.transaction.Transactional;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import static com.supportportal.constant.EquipeImplConstant.EQUIPE_ALREADY_EXISTS;
+import static com.supportportal.constant.EquipeImplConstant.NO_EQUIPE_FOUND_BY_REF;
 
 @Service
 public class EquipeServiceImpl implements EquipeService {
@@ -35,6 +37,7 @@ public class EquipeServiceImpl implements EquipeService {
     private MembreEquipeService membreEquipeService;
     private UserService userService;
     private CollaborateurService collaborateurService;
+    private Logger LOGGER = LoggerFactory.getLogger(getClass());
 
     @Autowired
     public EquipeServiceImpl(EquipeRepository equipeRepository, MembreEquipeService membreEquipeService, UserService userService,CollaborateurService collaborateurService) {
@@ -44,7 +47,6 @@ public class EquipeServiceImpl implements EquipeService {
         this.userService = userService;
     }
 
-    private Logger LOGGER = LoggerFactory.getLogger(getClass());
 
     @Override
     public Equipe findByLibelle(String libelle) {
@@ -77,7 +79,7 @@ public class EquipeServiceImpl implements EquipeService {
     }
 
     @Override
-    public int save(Equipe equipe, MultipartFile profileImage) throws UserNotFoundException, EmailExistException, IOException, UsernameExistException, NotAnImageFileException, UserNotFoundException {
+    public Equipe save(Equipe equipe, MultipartFile profileImage) throws UserNotFoundException, EmailExistException, IOException, UsernameExistException, NotAnImageFileException, UserNotFoundException {
         Collaborateur chefEquipe = collaborateurService.findByCodeCollaborateur(equipe.getChefEquipe().getCollaborateur().getCodeCollaborateur());
         if(equipeRepository.findByRef(equipe.getRef())!=null){
             LOGGER.error(EQUIPE_ALREADY_EXISTS + equipe.getCode());
@@ -96,12 +98,44 @@ public class EquipeServiceImpl implements EquipeService {
                     continue;
                 membreEquipeService.save(membreEquipe);
             }
+            return equipe;
         }
-        return 0;
     }
 
     @Override
-    public Equipe update(Equipe equipe,MultipartFile profileImage) {
-        return null;
+    public Equipe update(Equipe equipe,MultipartFile profileImage) throws UserNotFoundException, EmailExistException, IOException, UsernameExistException, NotAnImageFileException {
+        Equipe equipeUpdate = findByRef(equipe.getRef());
+        if (equipeUpdate != null) {
+            equipeUpdate.setRef(equipe.getRef());
+            equipeUpdate.setLibelle(equipe.getLibelle());
+            equipeUpdate.setCode(equipe.getCode());
+            MembreEquipe chefEquipe = membreEquipeService.findByCollaborateurCodeCollaborateur(
+                    equipe.getChefEquipe().getCollaborateur().getCodeCollaborateur());
+            Collaborateur chefEquipeCollaborateur = collaborateurService.findByCodeCollaborateur(equipe.getChefEquipe().getCollaborateur().getCodeCollaborateur());
+            User NewuserChefDEquipe=userService.findUserByUsername(chefEquipeCollaborateur.getUser().getUsername());
+            userService.updateUser(NewuserChefDEquipe.getUsername(), NewuserChefDEquipe.getFirstName(),NewuserChefDEquipe.getLastName(),NewuserChefDEquipe.getUsername(),NewuserChefDEquipe.getEmail(),"ROLE_MANAGER",NewuserChefDEquipe.isNotLocked(),NewuserChefDEquipe.isActive(),profileImage);
+            if (chefEquipe == null) {
+                membreEquipeService.save(equipe.getChefEquipe());
+            }
+            equipe.getChefEquipe().setEquipe(equipeUpdate);
+            equipeUpdate.setChefEquipe(equipe.getChefEquipe());
+            List<MembreEquipe> membreEquipeList = new ArrayList<>();
+            equipeRepository.save(equipeUpdate);
+            for (MembreEquipe membres : equipe.getMembres()) {
+                MembreEquipe membreEquipe = membreEquipeService
+                        .findByCollaborateurCodeCollaborateur(membres.getCollaborateur().getCodeCollaborateur());
+                membres.setEquipe(equipeUpdate);
+                if (equipe.getChefEquipe().getCollaborateur().getCodeCollaborateur()
+                        .equals(membreEquipe.getCollaborateur().getCodeCollaborateur()))
+                    continue;
+                membreEquipeService.save(membres);
+                membreEquipeList.add(membreEquipe);
+            }
+            equipeUpdate.setMembres(membreEquipeList);
+            return equipeUpdate;
+        } else {
+            LOGGER.error(NO_EQUIPE_FOUND_BY_REF + equipe.getCode());
+            throw new UsernameNotFoundException(NO_EQUIPE_FOUND_BY_REF + equipe.getCode());
+        }
     }
 }
