@@ -65,7 +65,7 @@ public class CollaborateurServiceImpl implements CollaborateurService {
                     , collaborateur.getUser().getLastName()
                     , collaborateur.getUser().getUsername()
                     , collaborateur.getUser().getEmail()
-                    , collaborateur.getUser().getRole()
+                    , "ROLE_COLLABORATEUR"
                     , collaborateur.getUser().isNotLocked()
                     , collaborateur.getUser().isActive()
                     , null);
