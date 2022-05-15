@@ -15,5 +15,5 @@ public interface TicketService {
     int deleteByCode(String code);
     int deleteByEtatTicket(String etatTicket);
     int save(Ticket ticket);
-    Ticket update(Ticket ticket);
+    int update(Ticket ticket);
 }

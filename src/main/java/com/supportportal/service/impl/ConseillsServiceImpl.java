@@ -3,6 +3,8 @@ package com.supportportal.service.impl;
 import com.supportportal.constant.CollaborateurImplConstant;
 import com.supportportal.domain.Collaborateur;
 import com.supportportal.domain.Conseils;
+import com.supportportal.domain.MembreEquipe;
+import com.supportportal.domain.Ticket;
 import com.supportportal.repository.ConseillsRepository;
 import com.supportportal.service.CollaborateurService;
 import com.supportportal.service.ConseillsService;
@@ -17,7 +19,7 @@ import javax.transaction.Transactional;
 import java.util.List;
 
 @Service
-public class Conseills  implements ConseillsService {
+public class ConseillsServiceImpl  implements ConseillsService {
 
     private ConseillsRepository conseillsRepository;
     private CollaborateurService collaborateurService;
@@ -25,7 +27,7 @@ public class Conseills  implements ConseillsService {
     private Logger LOGGER = LoggerFactory.getLogger(getClass());
 
     @Autowired
-    public Conseills(ConseillsRepository conseillsRepository, CollaborateurService collaborateurService,MembreEquipeService membreEquipeService) {
+    public ConseillsServiceImpl(ConseillsRepository conseillsRepository, CollaborateurService collaborateurService,MembreEquipeService membreEquipeService) {
         this.conseillsRepository = conseillsRepository;
         this.collaborateurService = collaborateurService;
         this.membreEquipeService = membreEquipeService ;
@@ -63,16 +65,19 @@ public class Conseills  implements ConseillsService {
     }
 
     @Override
-    public Conseils save(Conseils conseils) {
-        Collaborateur collaborateur=collaborateurService.findByUserUsername(conseils.getMembreEquipe().getCollaborateur().getUser().getUsername());
+    public int save(Ticket ticket, Conseils conseils) {
+        MembreEquipe collaborateur=membreEquipeService.findByCollaborateurCodeCollaborateur(conseils.getMembreEquipe().getCollaborateur().getUser().getUsername());
         if(collaborateur==null){
-            LOGGER.error(CollaborateurImplConstant.NO_COLLABORATEUR_FOUND_BY_USERNAME+ collaborateur.getUser().getUsername());
-            throw new UsernameNotFoundException(CollaborateurImplConstant.NO_COLLABORATEUR_FOUND_BY_USERNAME + collaborateur.getUser().getUsername());
+            LOGGER.error(CollaborateurImplConstant.NO_COLLABORATEUR_FOUND_BY_USERNAME+ collaborateur.getCollaborateur().getUser().getUsername());
+            throw new UsernameNotFoundException(CollaborateurImplConstant.NO_COLLABORATEUR_FOUND_BY_USERNAME + collaborateur.getCollaborateur().getUser().getUsername());
         }
         else {
-            conseils.setMembreEquipe(membreEquipeService.findByCollaborateurCodeCollaborateur(collaborateur.getCodeCollaborateur()));
-            conseillsRepository.save(conseils);
-            return conseils;
+            Conseils conseil = new Conseils();
+            conseil.setMembreEquipe(collaborateur);
+            conseil.setMessage(conseils.getMessage());
+            conseil.setTicket(ticket);
+            conseillsRepository.save(conseil);
+            return 1;
         }
     }
 

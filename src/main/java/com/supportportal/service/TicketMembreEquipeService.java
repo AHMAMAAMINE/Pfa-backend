@@ -1,5 +1,6 @@
 package com.supportportal.service;
 
+import com.supportportal.domain.Ticket;
 import com.supportportal.domain.TicketMembreEquipe;
 
 import java.util.List;
@@ -12,5 +13,5 @@ public interface TicketMembreEquipeService {
     TicketMembreEquipe findByMembreEquipeCollaborateurCodeCollaborateur(String code);
     int deleteByTicketCode(String code);
     TicketMembreEquipe update(TicketMembreEquipe ticketMembreEquipe);
-    int save(TicketMembreEquipe ticketMembreEquipe);
+    int save(TicketMembreEquipe ticketMembreEquipe, Ticket ticket);
 }

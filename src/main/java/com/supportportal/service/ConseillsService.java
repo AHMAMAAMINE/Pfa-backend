@@ -1,6 +1,7 @@
 package com.supportportal.service;
 
 import com.supportportal.domain.Conseils;
+import com.supportportal.domain.Ticket;
 
 import java.util.List;
 
@@ -18,7 +19,7 @@ public interface ConseillsService {
 
     List<Conseils> findByTicketCode(String code);
 
-    Conseils save(Conseils conseils);
+    int save(Ticket ticket, Conseils conseils);
 
     Conseils update(Conseils conseils);
 }
